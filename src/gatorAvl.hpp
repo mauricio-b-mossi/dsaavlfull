@@ -32,7 +32,7 @@ struct GatorAvl {
   void printLevelCount();
 
   // Removes the Nth GatorId from the inorder traversal of the tree.
-  void removeInorder();
+  void removeInorder(size_t index);
 
 private:
   AVL<std::string, std::string> avl;

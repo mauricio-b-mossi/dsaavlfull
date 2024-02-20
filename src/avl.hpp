@@ -33,21 +33,18 @@ template <typename K, typename V> struct AVL {
   void insert(Node<K, V> *node) {
     root = insertHelper(root, node);
     _size++;
-    std::cout << "Size: " << size() << std::endl;
   }
 
   // Remove, if node contains two leafs, performs successor removal.
   void sremove(K key) {
     root = deleteHelperSuccessor(root, key);
     _size--;
-    std::cout << "Size: " << size() << std::endl;
   };
 
   // Remove, if node contains two leafs, performs predecessor removal.
   void premove(K key) {
     root = deleteHelperPredecessor(root, key);
     _size--;
-    std::cout << "Size: " << size() << std::endl;
   };
 
   // Removes the Nth index, if nth node contains two leafs, performs successor
@@ -62,8 +59,6 @@ template <typename K, typename V> struct AVL {
 
     if (node) {
       sremove(node->key);
-    } else {
-      std::cout << "Bruh she failed" << std::endl;
     }
   };
 
@@ -79,8 +74,6 @@ template <typename K, typename V> struct AVL {
 
     if (node) {
       premove(node->key);
-    } else {
-      std::cout << "Bruh she failed" << std::endl;
     }
   };
 
@@ -93,21 +86,6 @@ template <typename K, typename V> struct AVL {
     assignNthNode(root, index, toBeAssigned);
 
     return toBeAssigned;
-  }
-
-  void assignNthNode(Node<K, V> *root, size_t &index,
-                     Node<K, V> *&toBeAssigned) {
-    if (root->l)
-      assignNthNode(root->l, index, toBeAssigned);
-
-    if (index == 0) {
-      toBeAssigned = root;
-      return;
-    } else
-      index--;
-
-    if (root->r)
-      assignNthNode(root->r, index, toBeAssigned);
   }
 
   void inorder(nodeAction nodeAction) { inorderHelper(root, nodeAction); }
@@ -434,6 +412,21 @@ private:
   // Similar to search Value, but traverses the whole tree.
   Node<K, V> *searchValuesHelper(Node<K, V> *root, nodeAction nodeAction) {
     preorder(nodeAction);
+  }
+
+  void assignNthNode(Node<K, V> *root, size_t &index,
+                     Node<K, V> *&toBeAssigned) {
+    if (root->l)
+      assignNthNode(root->l, index, toBeAssigned);
+
+    if (index == 0) {
+      toBeAssigned = root;
+      return;
+    } else
+      index--;
+
+    if (root->r)
+      assignNthNode(root->r, index, toBeAssigned);
   }
 
   // Making copy assignment and construction private to minimize double frees.

@@ -58,4 +58,4 @@ void GatorAvl::printLevelCount() {
   std::cout << avl.getAvlHeight() << std::endl;
 };
 
-void GatorAvl::removeInorder(){};
+void GatorAvl::removeInorder(size_t index) { avl.sremoveNthNode(index); };
