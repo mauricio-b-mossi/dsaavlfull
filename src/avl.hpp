@@ -36,24 +36,79 @@ template <typename K, typename V> struct AVL {
     std::cout << "Size: " << size() << std::endl;
   }
 
-  // Remove, if node contains two leafs, do successor removal.
+  // Remove, if node contains two leafs, performs successor removal.
   void sremove(K key) {
     root = deleteHelperSuccessor(root, key);
     _size--;
     std::cout << "Size: " << size() << std::endl;
   };
 
-  // Remove, if node contains two leafs, do predecessor removal.
+  // Remove, if node contains two leafs, performs predecessor removal.
   void premove(K key) {
     root = deleteHelperPredecessor(root, key);
     _size--;
     std::cout << "Size: " << size() << std::endl;
   };
 
-  // void removeInOrder(size_t index) {
-  // if(index > size() - 1) {
-  // }
-  //};
+  // Removes the Nth index, if nth node contains two leafs, performs successor
+  // removal.
+  void sremoveNthNode(size_t index) {
+    if (index > size() - 1) {
+      std::cout << "unsuccessful" << std::endl;
+      return;
+    }
+
+    Node<K, V> *node = getNthNode(index);
+
+    if (node) {
+      sremove(node->key);
+    } else {
+      std::cout << "Bruh she failed" << std::endl;
+    }
+  };
+
+  // Removes the Nth index, if nth node contains two leafs, performs predecessor
+  // removal.
+  void premoveNthNode(size_t index) {
+    if (index > size() - 1) {
+      std::cout << "unsuccessful" << std::endl;
+      return;
+    }
+
+    Node<K, V> *node = getNthNode(index);
+
+    if (node) {
+      premove(node->key);
+    } else {
+      std::cout << "Bruh she failed" << std::endl;
+    }
+  };
+
+  Node<K, V> *getNthNode(size_t index) {
+    if (index > size() - 1)
+      return nullptr;
+
+    Node<K, V> *toBeAssigned = nullptr;
+
+    assignNthNode(root, index, toBeAssigned);
+
+    return toBeAssigned;
+  }
+
+  void assignNthNode(Node<K, V> *root, size_t &index,
+                     Node<K, V> *&toBeAssigned) {
+    if (root->l)
+      assignNthNode(root->l, index, toBeAssigned);
+
+    if (index == 0) {
+      toBeAssigned = root;
+      return;
+    } else
+      index--;
+
+    if (root->r)
+      assignNthNode(root->r, index, toBeAssigned);
+  }
 
   void inorder(nodeAction nodeAction) { inorderHelper(root, nodeAction); }
 

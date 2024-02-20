@@ -11,18 +11,18 @@ int main() {
     avl.insert(num, num);
   }
 
-  std::cout << "Loading" << std::endl;
-  avl.sremove(20);
-  avl.sremove(100);
-  avl.sremove(111);
-  avl.sremove(6);
-  avl.sremove(27);
-  avl.sremove(222);
-
-  std::cout << "Loading" << std::endl;
+  std::cout << "Del 0" << std::endl;
+  avl.sremoveNthNode(0);
+  std::cout << "Del 100" << std::endl;
+  avl.sremoveNthNode(100);
+  std::cout << "Del -1" << std::endl;
+  avl.sremoveNthNode(-1);
+  std::cout << "Del 6" << std::endl;
+  avl.sremoveNthNode(6);
+  std::cout << "Del 6" << std::endl;
+  avl.sremoveNthNode(6);
 
   avl.printNodeHeights();
-  std::cout << "Loading" << std::endl;
 
   return 0;
 }
