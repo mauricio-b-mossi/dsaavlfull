@@ -23,18 +23,37 @@ template <typename K, typename V> struct AVL {
   AVL() {}
   ~AVL() { postorderDeallocate(root); }
 
+  int size() { return _size; };
+
   void insert(K key, V value) {
     Node<K, V> *node = new Node<K, V>(key, value);
     insert(node);
   }
 
-  void insert(Node<K, V> *node) { root = insertHelper(root, node); }
+  void insert(Node<K, V> *node) {
+    root = insertHelper(root, node);
+    _size++;
+    std::cout << "Size: " << size() << std::endl;
+  }
 
   // Remove, if node contains two leafs, do successor removal.
-  void sremove(K key) { root = deleteHelperSuccessor(root, key); };
+  void sremove(K key) {
+    root = deleteHelperSuccessor(root, key);
+    _size--;
+    std::cout << "Size: " << size() << std::endl;
+  };
 
   // Remove, if node contains two leafs, do predecessor removal.
-  void premove(K key) { root = deleteHelperPredecessor(root, key); };
+  void premove(K key) {
+    root = deleteHelperPredecessor(root, key);
+    _size--;
+    std::cout << "Size: " << size() << std::endl;
+  };
+
+  // void removeInOrder(size_t index) {
+  // if(index > size() - 1) {
+  // }
+  //};
 
   void inorder(nodeAction nodeAction) { inorderHelper(root, nodeAction); }
 
@@ -72,6 +91,8 @@ template <typename K, typename V> struct AVL {
 
 private:
   Node<K, V> *root = nullptr;
+
+  int _size = 0;
 
   // Once rotated only the heights of the rotated values changes.
   // If single rotation 2 change (root, child).
@@ -119,8 +140,9 @@ private:
     } else if (node->key < root->key) {
       root->l = insertHelper(root->l, node);
     } else {
-      // When equal returns unsuccessful. Cannot insert duplicates.
       std::cout << "unsuccessful" << std::endl;
+      // Decrement to balance increment in top level insert.
+      _size--;
     }
 
     setNodeHeight(root);
@@ -136,13 +158,13 @@ private:
 
   Node<K, V> *deleteHelperSuccessor(Node<K, V> *root, K key) {
 
-    // Perform deletion.
     if (root == nullptr) {
       std::cout << "unsuccessful" << std::endl;
+      // Increment to balance decrement top level remove.
+      _size++;
       return nullptr;
     }
 
-    // shouldn't it be key?'
     if (key == root->key) {
 
       // No child case.
@@ -194,10 +216,11 @@ private:
     // Perform deletion.
     if (root == nullptr) {
       std::cout << "unsuccessful" << std::endl;
+      // Increment to balance decrement top level remove.
+      _size++;
       return nullptr;
     }
 
-    // shouldn't it be key?'
     if (key == root->key) {
 
       // No child case.

@@ -12,12 +12,12 @@ int main() {
   }
 
   std::cout << "Loading" << std::endl;
-  avl.sremove(3);
-  avl.sremove(2);
-  avl.sremove(0);
-  avl.sremove(10);
-  avl.sremove(19);
-  avl.sremove(4);
+  avl.sremove(20);
+  avl.sremove(100);
+  avl.sremove(111);
+  avl.sremove(6);
+  avl.sremove(27);
+  avl.sremove(222);
 
   std::cout << "Loading" << std::endl;
 
