@@ -190,6 +190,7 @@ private:
   Node<K, V> *insertHelper(Node<K, V> *root, Node<K, V> *node) {
 
     if (root == nullptr) {
+      std::cout << "successful" << std::endl;
       return node;
     }
 
@@ -287,6 +288,7 @@ private:
       // No child case.
       if (root->l == nullptr && root->r == nullptr) {
         delete root;
+        std::cout << "successful" << std::endl;
         return nullptr;
 
         // Diff case
@@ -304,10 +306,12 @@ private:
         if (root->l != nullptr) {
           Node<K, V> *temp = root->l;
           delete root;
+          std::cout << "successful" << std::endl;
           return temp;
         } else {
           Node<K, V> *temp = root->r;
           delete root;
+          std::cout << "successful" << std::endl;
           return temp;
         }
       }

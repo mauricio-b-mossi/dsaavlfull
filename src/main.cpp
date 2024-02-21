@@ -5,6 +5,4 @@
 
 #include "inputHandler.hpp"
 
-int main() {
-    inputHandler();
-}
+int main(int argc, char **argv) { inputHandler(); }
