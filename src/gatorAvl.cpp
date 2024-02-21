@@ -27,11 +27,30 @@ void GatorAvl::insert(std::string name, std::string id) {
   avl.insert(id, name);
 };
 
-void GatorAvl::remove(std::string id) { avl.sremove(id); }
+void GatorAvl::remove(std::string id) {
+  if (avl.size() < 1) {
+    std::cout << "unsuccessful" << std::endl;
+    return;
+  }
+  avl.sremove(id);
+}
 
-void GatorAvl::searchId(std::string id) { avl.searchKey(id); }
+void GatorAvl::searchId(std::string id) {
+  if (avl.size() < 1) {
+    std::cout << "unsuccessful" << std::endl;
+    return;
+  }
+  avl.searchKey(id);
+}
 
-void GatorAvl::searchNames(std::string name) { avl.searchValues(name); }
+void GatorAvl::searchNames(std::string name) {
+
+  if (avl.size() < 1) {
+    std::cout << "unsuccessful" << std::endl;
+    return;
+  }
+  avl.searchValues(name);
+}
 
 void GatorAvl::printInorder() {
   if (avl.size() > 0) {
@@ -64,4 +83,11 @@ void GatorAvl::printLevelCount() {
   std::cout << avl.getAvlHeight() << std::endl;
 };
 
-void GatorAvl::removeInorder(size_t index) { avl.sremoveNthNode(index); };
+void GatorAvl::removeInorder(size_t index) {
+
+  if (avl.size() < 1) {
+    std::cout << "unsuccessful" << std::endl;
+    return;
+  }
+  avl.sremoveNthNode(index);
+};

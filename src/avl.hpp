@@ -51,11 +51,8 @@ template <typename K, typename V> struct AVL {
   // Removes the Nth index, if nth node contains two leafs, performs successor
   // removal.
   void sremoveNthNode(size_t index) {
-    if (index > size() - 1) {
-      std::cout << "unsuccessful" << std::endl;
-      return;
-    }
-
+    if (index > size() - 1)
+      throw std::out_of_range("index out of bounds");
     Node<K, V> *node = getNthNode(index);
 
     if (node) {
@@ -66,11 +63,8 @@ template <typename K, typename V> struct AVL {
   // Removes the Nth index, if nth node contains two leafs, performs predecessor
   // removal.
   void premoveNthNode(size_t index) {
-    if (index > size() - 1) {
-      std::cout << "unsuccessful" << std::endl;
-      return;
-    }
-
+    if (index > size() - 1)
+      throw std::out_of_range("index out of bounds");
     Node<K, V> *node = getNthNode(index);
 
     if (node) {
@@ -80,7 +74,7 @@ template <typename K, typename V> struct AVL {
 
   Node<K, V> *getNthNode(size_t index) {
     if (index > size() - 1)
-      return nullptr;
+      throw std::out_of_range("index out of bounds");
 
     Node<K, V> *toBeAssigned = nullptr;
 
@@ -106,6 +100,10 @@ template <typename K, typename V> struct AVL {
   int getAvlHeight() { return root ? root->height : 0; }
 
   void searchKey(K key) {
+    if (root == nullptr) {
+      std::cout << "unsuccessful" << std::endl;
+      return;
+    }
     Node<K, V> *node = searchKeyHelper(root, key);
     if (node == nullptr) {
       std::cout << "unsuccessful" << std::endl;
@@ -115,14 +113,20 @@ template <typename K, typename V> struct AVL {
   }
 
   void searchValues(V value) {
+    if (root == nullptr) {
+      std::cout << "unsuccessful" << std::endl;
+      return;
+    }
+
     unsigned char count = 0;
+
     searchValuesHelper(root, [value, &count](Node<K, V> *node) {
-      if (node->value == value)
+      if (node->value == value) {
         std::cout << node->key << std::endl;
-      count++;
+        count++;
+      }
     });
 
-    std::cout << count << std::endl;
     if (count < 1)
       std::cout << "unsuccessful" << std::endl;
   }
@@ -194,7 +198,10 @@ private:
     } else if (node->key < root->key) {
       root->l = insertHelper(root->l, node);
     } else {
+
+      // Node is already in the tree.
       std::cout << "unsuccessful" << std::endl;
+
       // Decrement to balance increment in top level insert.
       _size--;
     }
