@@ -2,6 +2,7 @@
 #include <cmath>
 #include <functional>
 #include <iostream>
+#include <stdexcept>
 
 template <typename K, typename V> struct Node {
   Node(K key, V value) : key{key}, value{value} {};
@@ -85,6 +86,9 @@ template <typename K, typename V> struct AVL {
 
     assignNthNode(root, index, toBeAssigned);
 
+    if (toBeAssigned == nullptr)
+      throw std::runtime_error("unable to retrive nth node.");
+
     return toBeAssigned;
   }
 
@@ -118,6 +122,7 @@ template <typename K, typename V> struct AVL {
       count++;
     });
 
+    std::cout << count << std::endl;
     if (count < 1)
       std::cout << "unsuccessful" << std::endl;
   }
@@ -132,6 +137,10 @@ private:
   // If double rotation 3 change (root, child, grandchild).
   // The only heights that change are those of the rotated objects, namely,
   Node<K, V> *rotateLeft(Node<K, V> *root) {
+
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     Node<K, V> *gp = root->r->l;
     Node<K, V> *newRoot = root->r;
     newRoot->l = root;
@@ -143,6 +152,10 @@ private:
 
   // This bug cost me hours, first update oldRootHeight, then newRoot, duh!
   Node<K, V> *rotateRight(Node<K, V> *root) {
+
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     Node<K, V> *gp = root->l->r;
     Node<K, V> *newRoot = root->l;
     newRoot->r = root;
@@ -153,11 +166,19 @@ private:
   }
 
   Node<K, V> *rotateLeftRight(Node<K, V> *root) {
+
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     root->l = rotateLeft(root->l);
     return rotateRight(root);
   }
 
   Node<K, V> *rotateRightLeft(Node<K, V> *root) {
+
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     root->r = rotateRight(root->r);
     return rotateLeft(root);
   }
@@ -301,6 +322,9 @@ private:
   }
 
   Node<K, V> *performRotation(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     int rootLeftHeight = root->l ? root->l->height : 0;
     int rootRightHeight = root->r ? root->r->height : 0;
 
@@ -328,25 +352,40 @@ private:
   }
 
   void inorderHelper(Node<K, V> *node, nodeAction nodeAction) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     if (node->l)
       inorderHelper(node->l, nodeAction);
+
     nodeAction(node);
+
     if (node->r)
       inorderHelper(node->r, nodeAction);
   };
 
   void postorderHelper(Node<K, V> *node, nodeAction nodeAction) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     if (node->l)
       postorderHelper(node->l, nodeAction);
+
     if (node->r)
       postorderHelper(node->r, nodeAction);
+
     nodeAction(node);
   }
 
   void preorderHelper(Node<K, V> *node, nodeAction nodeAction) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     nodeAction(node);
+
     if (node->l)
       preorderHelper(node->l, nodeAction);
+
     if (node->r)
       preorderHelper(node->r, nodeAction);
   }
@@ -369,25 +408,38 @@ private:
   }
 
   void setNodeHeight(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     root->height = 1 + std::max(root->r ? root->r->height : 0,
                                 root->l ? root->l->height : 0);
   }
 
   Node<K, V> *getSuccessor(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     return getLeftMostNode(root->r);
   }
 
   Node<K, V> *getPredecessor(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     return getRighMostNode(root->l);
   }
 
   Node<K, V> *getLeftMostNode(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
     if (root->l != nullptr)
       return getLeftMostNode(root->l);
     return root;
   }
 
   Node<K, V> *getRighMostNode(Node<K, V> *root) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
     if (root->r != nullptr)
       return getRighMostNode(root->r);
 
@@ -416,6 +468,9 @@ private:
 
   void assignNthNode(Node<K, V> *root, size_t &index,
                      Node<K, V> *&toBeAssigned) {
+    if (root == nullptr)
+      throw std::logic_error("root must not be null.");
+
     if (root->l)
       assignNthNode(root->l, index, toBeAssigned);
 

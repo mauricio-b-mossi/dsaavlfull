@@ -34,24 +34,30 @@ void GatorAvl::searchId(std::string id) { avl.searchKey(id); }
 void GatorAvl::searchNames(std::string name) { avl.searchValues(name); }
 
 void GatorAvl::printInorder() {
-  avl.inorder([](Node<std::string, std::string> *node) {
-    std::cout << node->value << ", ";
-  });
-  std::cout << std::endl;
+  if (avl.size() > 0) {
+    avl.inorder([](Node<std::string, std::string> *node) {
+      std::cout << node->value << ", ";
+    });
+    std::cout << std::endl;
+  }
 };
 
 void GatorAvl::printPreorder() {
-  avl.preorder([](Node<std::string, std::string> *node) {
-    std::cout << node->value << ", ";
-  });
-  std::cout << std::endl;
+  if (avl.size() > 0) {
+    avl.preorder([](Node<std::string, std::string> *node) {
+      std::cout << node->value << ", ";
+    });
+    std::cout << std::endl;
+  }
 };
 
 void GatorAvl::printPostorder() {
-  avl.postorder([](Node<std::string, std::string> *node) {
-    std::cout << node->value << ", ";
-  });
-  std::cout << std::endl;
+  if (avl.size() > 0) {
+    avl.postorder([](Node<std::string, std::string> *node) {
+      std::cout << node->value << ", ";
+    });
+    std::cout << std::endl;
+  }
 };
 
 void GatorAvl::printLevelCount() {
