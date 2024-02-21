@@ -53,27 +53,39 @@ void GatorAvl::searchNames(std::string name) {
 }
 
 void GatorAvl::printInorder() {
+  int count = 0;
+  int size = avl.size();
   if (avl.size() > 0) {
-    avl.inorder([](Node<std::string, std::string> *node) {
-      std::cout << node->value << ", ";
+    avl.inorder([&count, size](Node<std::string, std::string> *node) {
+      std::cout << node->value;
+      if (++count != size)
+        std::cout << ", ";
     });
     std::cout << std::endl;
   }
 };
 
 void GatorAvl::printPreorder() {
+  int count = 0;
+  int size = avl.size();
   if (avl.size() > 0) {
-    avl.preorder([](Node<std::string, std::string> *node) {
-      std::cout << node->value << ", ";
+    avl.preorder([&count, size](Node<std::string, std::string> *node) {
+      std::cout << node->value;
+      if (++count != size)
+        std::cout << ", ";
     });
     std::cout << std::endl;
   }
 };
 
 void GatorAvl::printPostorder() {
+  int count = 0;
+  int size = avl.size();
   if (avl.size() > 0) {
-    avl.postorder([](Node<std::string, std::string> *node) {
-      std::cout << node->value << ", ";
+    avl.postorder([&count, size](Node<std::string, std::string> *node) {
+      std::cout << node->value;
+      if (++count != size)
+        std::cout << ", ";
     });
     std::cout << std::endl;
   }
@@ -84,7 +96,6 @@ void GatorAvl::printLevelCount() {
 };
 
 void GatorAvl::removeInorder(size_t index) {
-
   if (avl.size() < 1) {
     std::cout << "unsuccessful" << std::endl;
     return;

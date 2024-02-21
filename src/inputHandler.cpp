@@ -54,9 +54,9 @@ void inputHandler() {
       handlePostorder(iss, word, avl);
     else if (word == "printLevelCount")
       handlePrintLevelCount(iss, word, avl);
-    else if (word == "removeInorder")
+    else if (word == "removeInorder") {
       handleRemoveInorder(iss, word, numberRegexp, avl);
-    else {
+    } else {
       std::cout << "unsuccessful" << std::endl;
     }
   }

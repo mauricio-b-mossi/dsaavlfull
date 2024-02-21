@@ -53,6 +53,7 @@ template <typename K, typename V> struct AVL {
   void sremoveNthNode(size_t index) {
     if (index > size() - 1)
       throw std::out_of_range("index out of bounds");
+
     Node<K, V> *node = getNthNode(index);
 
     if (node) {
@@ -232,6 +233,7 @@ private:
       // No child case.
       if (root->l == nullptr && root->r == nullptr) {
         delete root;
+        std::cout << "successful" << std::endl;
         return nullptr;
 
         // Diff case
@@ -249,16 +251,18 @@ private:
         if (root->l != nullptr) {
           Node<K, V> *temp = root->l;
           delete root;
+          std::cout << "successful" << std::endl;
           return temp;
         } else {
           Node<K, V> *temp = root->r;
           delete root;
+          std::cout << "successful" << std::endl;
           return temp;
         }
       }
-    } else if (key > root->value) {
+    } else if (key > root->key) {
       root->r = deleteHelperSuccessor(root->r, key);
-    } else if (key < root->value) {
+    } else if (key < root->key) {
       root->l = deleteHelperSuccessor(root->l, key);
     }
 
@@ -315,9 +319,9 @@ private:
           return temp;
         }
       }
-    } else if (key > root->value) {
+    } else if (key > root->key) {
       root->r = deleteHelperPredecessor(root->r, key);
-    } else if (key < root->value) {
+    } else if (key < root->key) {
       root->l = deleteHelperPredecessor(root->l, key);
     }
 
