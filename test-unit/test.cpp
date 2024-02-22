@@ -18,6 +18,10 @@
 */
 
 TEST_CASE("BST Insert", "[flag]") {
+
+  std::stringstream buffer;
+  std::streambuf *oldCout = std::cout.rdbuf(buffer.rdbuf());
+
   AVL<int, int> tree; // Create a Tree object
   tree.insert(3, 3);
   tree.insert(2, 2);
@@ -42,6 +46,9 @@ TEST_CASE("BST Insert", "[flag]") {
 
   REQUIRE(expectedOutput.size() == actualOutput.size());
   REQUIRE(actualOutput == expectedOutput);
+
+  // Restore the original cout
+  std::cout.rdbuf(oldCout);
 }
 
 TEST_CASE("Input Handler Incorrect Commands") {
@@ -99,6 +106,9 @@ TEST_CASE("BST Edge Cases", "[flag]") {
 }
 
 TEST_CASE("BST All Rotations", "[flag]") {
+  // Redirect cout to a stringstream
+  std::stringstream buffer;
+  std::streambuf *oldCout = std::cout.rdbuf(buffer.rdbuf());
 
   // Call the function that writes to cout
   AVL<int, int> tree;
@@ -208,9 +218,15 @@ TEST_CASE("BST All Rotations", "[flag]") {
   tree.clear();
 
   REQUIRE(tree.size() == 0);
+
+  // Restore the original cout
+  std::cout.rdbuf(oldCout);
 }
 
 TEST_CASE("BST Test All Deletions", "[flag]") {
+
+  std::stringstream buffer;
+  std::streambuf *oldCout = std::cout.rdbuf(buffer.rdbuf());
 
   AVL<int, int> tree;
   std::vector<int> expectedOutput = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -256,9 +272,15 @@ TEST_CASE("BST Test All Deletions", "[flag]") {
   std::sort(expectedOutput.begin(), expectedOutput.end());
 
   REQUIRE(expectedOutput == tree.getInorderKey());
+
+  // Restore the original cout
+  std::cout.rdbuf(oldCout);
 }
 
 TEST_CASE("BST Insert 1000  Remove 100", "[flag]") {
+
+  std::stringstream buffer;
+  std::streambuf *oldCout = std::cout.rdbuf(buffer.rdbuf());
 
   AVL<int, int> tree;
   std::vector<int> expectedOutput;
@@ -290,4 +312,7 @@ TEST_CASE("BST Insert 1000  Remove 100", "[flag]") {
   std::sort(expectedOutput.begin(), expectedOutput.end());
 
   REQUIRE(expectedOutput == tree.getInorderKey());
+
+  // Restore the original cout
+  std::cout.rdbuf(oldCout);
 }
