@@ -3,6 +3,7 @@
 #include <functional>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 template <typename K, typename V> struct Node {
   Node(K key, V value) : key{key}, value{value} {};
@@ -24,6 +25,7 @@ template <typename K, typename V> struct AVL {
   AVL() {}
   ~AVL() { postorderDeallocate(root); }
 
+
   int size() { return _size; };
 
   void insert(K key, V value) {
@@ -35,6 +37,11 @@ template <typename K, typename V> struct AVL {
     root = insertHelper(root, node);
     _size++;
   }
+
+  void clear() {
+    postorderDeallocate(root);
+    root = nullptr;
+  };
 
   // Remove, if node contains two leafs, performs successor removal.
   void sremove(K key) {
@@ -92,6 +99,55 @@ template <typename K, typename V> struct AVL {
   void postorder(nodeAction nodeAction) { postorderHelper(root, nodeAction); };
 
   void preorder(nodeAction nodeAction) { preorderHelper(root, nodeAction); };
+
+  // Prefer using inorder, passing std::vector* and modifying it within lambda.
+  std::vector<V> getInorderValue() {
+    std::vector<V> vec;
+    inorderHelper(root,
+                  [&vec](Node<K, V> *node) { vec.push_back(node->value); });
+    return vec;
+  };
+
+  // Prefer using postorder, passing std::vector* and modifying it within
+  // lambda.
+  std::vector<V> getPostorderValue() {
+    std::vector<V> vec;
+    postorderHelper(root,
+                    [&vec](Node<K, V> *node) { vec.push_back(node->value); });
+    return vec;
+  };
+
+  // Prefer using preorder, passing std::vector* and modifying it within lambda.
+  std::vector<V> getPreorderValue() {
+    std::vector<V> vec;
+    preorderHelper(root,
+                   [&vec](Node<K, V> *node) { vec.push_back(node->value); });
+    return vec;
+  };
+
+  // Prefer using inorder, passing std::vector* and modifying it within lambda.
+  std::vector<V> getInorderKey() {
+    std::vector<V> vec;
+    inorderHelper(root, [&vec](Node<K, V> *node) { vec.push_back(node->key); });
+    return vec;
+  };
+
+  // Prefer using postorder, passing std::vector* and modifying it within
+  // lambda.
+  std::vector<V> getPostorderKey() {
+    std::vector<V> vec;
+    postorderHelper(root,
+                    [&vec](Node<K, V> *node) { vec.push_back(node->key); });
+    return vec;
+  };
+
+  // Prefer using preorder, passing std::vector* and modifying it within lambda.
+  std::vector<V> getPreorderKey() {
+    std::vector<V> vec;
+    preorderHelper(root,
+                   [&vec](Node<K, V> *node) { vec.push_back(node->key); });
+    return vec;
+  };
 
   void printNodeHeights() {
     getNodeHeightsHelper(root);
@@ -419,6 +475,7 @@ private:
       postorderDeallocate(node->l);
     if (node->r)
       postorderDeallocate(node->r);
+    _size--;
     delete node;
   }
 

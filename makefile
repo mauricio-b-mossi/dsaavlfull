@@ -25,5 +25,5 @@ clean:
 	del build\tests.exe
 
 test:
-	g++ -std=c++14 -Werror -Wuninitialized -o build/test test-unit/test.cpp && .\\build\\test
+	g++ -std=c++14 -Werror -Wuninitialized -o build/test test-unit/test.cpp src/inputHandler.cpp src/inputHandlerHelpers.cpp src/gatorAvl.cpp && .\\build\\test
 

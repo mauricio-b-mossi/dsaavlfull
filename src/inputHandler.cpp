@@ -5,6 +5,7 @@
 #include <string>
 
 #include "gatorAvl.hpp"
+#include "inputHandler.hpp"
 #include "inputHandlerHelpers.hpp"
 
 void inputHandler() {
